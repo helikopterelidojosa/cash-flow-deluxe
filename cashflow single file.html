@@ -1,0 +1,1291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <style>
+       svg{
+        width: 500px;
+       }
+    #button-box{
+        display: flex;
+    }
+
+    h1{
+        border: solid 3px black;
+        border-radius: 10px;
+        background-color: aqua;
+        padding: 20px;
+    }
+    body{
+        position: relative;
+    }
+    #forma{
+        position:absolute;
+        z-index: 999999;
+        width:100vw;
+        height:100vh;
+        background-color: rgb(255, 117, 117);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+    #dice {
+    width: 90px;
+    height: 90px;
+    transform-style: preserve-3d;
+    transition: transform 1.5s ease-out;
+}
+
+#dice:hover {
+    cursor: pointer;
+}
+
+.sides {
+    background-color: #EFE5DC;
+    display: block;
+    position: absolute;
+    width: 130%;
+    height: 130%;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.25);
+}
+
+.dot {
+    display: block;
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: black;
+    transform: translate(-50%, -50%);
+}
+
+.side-1 .dot-1 {
+    top: 50%;
+    left: 50%;
+}
+
+.side-2 .dot-1 {
+    top: 25%;
+    left: 25%;
+}
+
+.side-2 .dot-2 {
+    top: 75%;
+    left: 75%;
+}
+
+.side-3 .dot-1 {
+    top: 25%;
+    left: 25%;
+}
+
+.side-3 .dot-2 {
+    top: 75%;
+    left: 75%;
+}
+
+.side-3 .dot-3 {
+    top: 50%;
+    left: 50%;
+}
+
+.side-4 .dot-1 {
+    top: 25%;
+    left: 25%;
+}
+
+.side-4 .dot-2 {
+    top: 25%;
+    left: 75%;
+}
+
+.side-4 .dot-3 {
+    top: 75%;
+    left: 25%;
+}
+
+.side-4 .dot-4 {
+    top: 75%;
+    left: 75%;
+}
+
+.side-5 .dot-1 {
+    top: 25%;
+    left: 25%;
+}
+
+.side-5 .dot-2 {
+    top: 25%;
+    left: 75%;
+}
+
+.side-5 .dot-3 {
+    top: 75%;
+    left: 25%;
+}
+
+.side-5 .dot-4 {
+    top: 75%;
+    left: 75%;
+}
+
+.side-5 .dot-5 {
+    top: 50%;
+    left: 50%;
+}
+
+.side-6 .dot-1 {
+    top: 25%;
+    left: 25%;
+}
+
+.side-6 .dot-2 {
+    top: 25%;
+    left: 75%;
+}
+
+.side-6 .dot-3 {
+    top: 75%;
+    left: 25%;
+}
+
+.side-6 .dot-4 {
+    top: 75%;
+    left: 75%;
+}
+
+.side-6 .dot-5 {
+    top: 50%;
+    left: 25%;
+}
+
+.side-6 .dot-6 {
+    top: 50%;
+    left: 75%;
+}
+
+#dice .side-1 {
+    transform: translateZ(45px);
+}
+
+#dice .side-2 {
+    transform: rotateX(-180deg) translateZ(45px);
+}
+
+#dice .side-3 {
+    transform: rotateY(90deg) translateZ(45px);
+}
+
+#dice .side-4 {
+    transform: rotateY(-90deg) translateZ(45px);
+}
+
+#dice .side-5 {
+    transform: rotateX(90deg) translateZ(45px);
+}
+
+#dice .side-6 {
+    transform: rotateX(-90deg) translateZ(45px);
+}
+
+#dice[data-side="1"] {
+    transform: rotateX(360deg) rotateY(360deg) rotateZ(720deg);
+}
+
+#dice[data-side="2"] {
+    transform: rotateX(360deg) rotateY(540deg) rotateZ(720deg);
+}
+
+#dice[data-side="3"] {
+    transform: rotateX(360deg) rotateY(630deg) rotateZ(720deg);
+}
+
+#dice[data-side="4"] {
+    transform: rotateX(360deg) rotateY(450deg) rotateZ(720deg);
+}
+
+#dice[data-side="5"] {
+    transform: rotateX(630deg) rotateY(360deg) rotateZ(720deg);
+}
+
+#dice[data-side="6"] {
+    transform: rotateX(450deg) rotateY(360deg) rotateZ(720deg);
+}
+
+#dice[data-side="1"].reRoll {
+    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+}
+
+#dice[data-side="2"].reRoll {
+    transform: rotateX(0deg) rotateY(180deg) rotateZ(0deg);
+}
+
+#dice[data-side="3"].reRoll {
+    transform: rotateX(0deg) rotateY(270deg) rotateZ(0deg);
+}
+
+#dice[data-side="4"].reRoll {
+    transform: rotateX(0deg) rotateY(90deg) rotateZ(0deg);
+}
+
+#dice[data-side="5"].reRoll {
+    transform: rotateX(270deg) rotateY(0deg) rotateZ(0deg);
+}
+
+#dice[data-side="6"].reRoll {
+    transform: rotateX(90deg) rotateY(0deg) rotateZ(0deg);
+}
+
+#diceResult {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #EE4E34;
+    color: white;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+}
+
+#diceResult.hide {
+    opacity: 0;
+}
+
+#diceResult.reveal {
+    animation: fadeUp 0.3s forwards;
+}
+
+@keyframes fadeUp {
+    0% {
+        opacity: 0;
+        bottom: 0;
+    }
+
+    100% {
+        opacity: 1;
+        bottom: 20px;
+    }
+}
+
+
+
+/* -----------------for cards------------------- */
+
+.hide {
+			display: none;
+		}
+
+		.info-card {
+            font-weight: bold;
+            border-radius: 20px;
+            border: solid 3px blue;
+            position: absolute;
+            z-index: 999999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: aquamarine;
+            text-align: center;
+			width: 600px;
+			height: 250px;
+		}
+
+        #button-to-delete-article{
+            font-weight: bold;
+            font-size: xx-large;
+            border-radius: 20px;
+            display: none;
+            position: absolute;
+            z-index: 999999999;
+            color: antiquewhite;
+            background-color: #EE4E34;
+
+        }
+
+body{
+    position: relative;
+    background-color: rgb(234, 187, 170);
+}
+
+#submit-button{
+    font-weight: bold;
+    border: solid 3px rgb(240, 43, 43);
+    background-color: #781d0f;
+    color: #EFE5DC;
+    padding: 15px;
+    border-radius: 15px;
+}
+#submit-button:hover{
+    background-color: #a92d1a;
+    color: #7373e9;
+
+}
+
+#separate-dice{
+    width: 300px;
+}
+
+.info-text{
+    padding: 10px;
+    border: solid 3px;
+}
+
+    </style>
+</head>
+<body>
+    
+
+    <div id="forma">
+        <h2>to start game, choose number of players, then hit "Submit" button:</h2>
+        <div>
+    <label id="form-label" for="player-count">Number of players: 1</label>
+    <input type="range" min="2" max="6" value="2" id="range-input">
+    <span id="submit-button" onclick="document.getElementById('forma').style.display=`none`;">Submit</span>
+        </div>
+    </div>
+    
+
+
+<div id="button-box">
+    <button class="player-button" style="background-color: red; display:block">player1</button>
+    <button class="player-button" style="background-color: yellow; display:none" >player2</button>
+
+    <button class="player-button" style="background-color: blue; display:none;">player3</button>
+    <button class="player-button" style="background-color: green; display:none;">player4</button>
+
+    <button class="player-button" style="background-color: black; color: white; display:none;">player5</button>
+    <button class="player-button" style="background-color: white; display:none;">player6</button>
+    <span class="info-text" id="players-info">Start game! Good luck!</span><span class="info-text" id="cards-info"></span>
+</div>
+    
+<div style="display: flex;">
+    <h1 id="separate-dice" onclick="separateDice()">separate dice: click</h1>
+    <h1 id="gameplay-button" onclick="gamePlay()">click here to make move</h1>
+</div>
+
+
+<div style="display: flex; flex-wrap: wrap;">
+
+
+    <svg   style="font-family:'lucida grande', 'lucida sans unicode', arial, helvetica, sans-serif;font-size:7px;" width="500" height="390">
+        
+        
+        
+            
+        <path fill="#ffd1bc" d="M 289.9638480063441 10.500003681596212 A 177.5 177.5 0 0 1 335.76838077454886 16.502171088739715 L 290 188 A 0 0 0 0 0 290 188 Z" stroke="#FFFFFF" stroke-width="1" stroke-linejoin="round" transform="translate(0,0)"></path>
+        
+
+        <path fill="#b6f591" d="M 335.93985569068866 16.548025210793497 A 177.5 177.5 0 0 1 378.62661940291423 34.20932299644758 L 290 188 A 0 0 0 0 0 290 188 Z" stroke="#FFFFFF" stroke-width="1" stroke-linejoin="round" transform="translate(0,0)"></path>
+        
+        <path fill="#00c3df" d="M 378.78036574097996 34.29802649641147 A 177.5 177.5 0 0 1 415.4358935477383 62.41303168767686 L 290 188 A 0 0 0 0 0 290 188 Z" stroke="#FFFFFF" stroke-width="1" stroke-linejoin="round" transform="translate(0,0)"></path>
+        
+        <path fill="#fbbd00" d="M 415.56141777717795 62.53853035379754 A 177.5 177.5 0 0 1 443.59499963807207 99.03469167040087 L 290 188 A 0 0 0 0 0 290 188 Z" stroke="#FFFFFF" stroke-width="1" stroke-linejoin="round" transform="translate(0,0)"></path>
+        
+        <path fill="#fc00f3" d="M 443.6838881340807 99.18833112709024 A 177.5 177.5 0 0 1 461.3965540269204 141.8538054906263 L 290 188 A 0 0 0 0 0 290 188 Z" stroke="#FFFFFF" stroke-width="1" stroke-linejoin="round" transform="translate(0,0)"></path>
+        
+        <path fill="#a9fa8c" d="M 461.4426145154689 142.02522508918247 A 177.5 177.5 0 0 1 467.49991125000736 187.82250002958332 L 290 188 A 0 0 0 0 0 290 188 Z" stroke="#FFFFFF" stroke-width="1" stroke-linejoin="round" transform="translate(0,0)"></path>
+        
+        <path fill="#f83f3f" d="M 467.5 188 A 177.5 177.5 0 0 1 461.48850356141713 233.8033093374903 L 290 188 A 0 0 0 0 0 290 188 Z" stroke="#FFFFFF" stroke-width="1" stroke-linejoin="round" transform="translate(0,0)"></path>
+        
+        <path fill="#a4f797" d="M 461.4426145154689 233.97477491081753 A 177.5 177.5 0 0 1 443.772622946214 276.6579406045589 L 290 188 A 0 0 0 0 0 290 188 Z" stroke="#FFFFFF" stroke-width="1" stroke-linejoin="round" transform="translate(0,0)"></path>
+        
+        <path fill="#f6cbcb" d="M 443.6838881340807 276.81166887290976 A 177.5 177.5 0 0 1 415.68681644521024 313.3358455186226 L 290 188 A 0 0 0 0 0 290 188 Z" stroke="#FFFFFF" stroke-width="1" stroke-linejoin="round" transform="translate(0,0)"></path>
+        
+        <path fill="#adff9e" d="M 415.56141777717795 313.46146964620243 A 177.5 177.5 0 0 1 378.93402329868735 341.6131163016639 L 290 188 A 0 0 0 0 0 290 188 Z" stroke="#FFFFFF" stroke-width="1" stroke-linejoin="round" transform="translate(0,0)"></path>
+        
+        <path fill="#4ea8df" d="M 378.78036574097996 341.70197350358853 A 177.5 177.5 0 0 1 336.1112846669766 359.4059492151922 L 290 188 A 0 0 0 0 0 290 188 Z" stroke="#FFFFFF" stroke-width="1" stroke-linejoin="round" transform="translate(0,0)"></path>
+        
+        <path fill="#aef8a8" d="M 335.93985569068866 359.4519747892065 A 177.5 177.5 0 0 1 290.14134799115516 365.49994372040067 L 290 188 A 0 0 0 0 0 290 188 Z" stroke="#FFFFFF" stroke-width="1" stroke-linejoin="round" transform="translate(0,0)"></path>
+        
+        <path fill="#f800fd" d="M 289.9638480063441 365.49999631840376 A 177.5 177.5 0 0 1 244.16176399961662 359.47917109775506 L 290 188 A 0 0 0 0 0 290 188 Z" stroke="#FFFFFF" stroke-width="1" stroke-linejoin="round" transform="translate(0,0)"></path>
+        
+        <path fill="#abf59f" d="M 243.99030777621482 359.433247129816 A 177.5 177.5 0 0 1 201.46454075308327 341.84317487603255 L 290 188 A 0 0 0 0 0 290 188 Z" stroke="#FFFFFF" stroke-width="1" stroke-linejoin="round" transform="translate(0,0)"></path>
+        
+        <path fill="#f93131" d="M 201.31074187157373 341.7545625099606 A 177.5 177.5 0 0 1 164.6385580444491 313.6612862850967 L 290 188 A 0 0 0 0 0 290 188 Z" stroke="#FFFFFF" stroke-width="1" stroke-linejoin="round" transform="translate(0,0)"></path>
+        
+        <path fill="#a3f796" d="M 164.5129594598233 313.5358620333968 A 177.5 177.5 0 0 1 136.36877340704243 276.90273457854556 L 290 188 A 0 0 0 0 0 290 188 Z" stroke="#FFFFFF" stroke-width="1" stroke-linejoin="round" transform="translate(0,0)"></path>
+        
+        <path fill="#f8c5c5" d="M 136.2799475028879 276.74905892619427 A 177.5 177.5 0 0 1 118.58466270693032 234.07637291175553 L 290 188 A 0 0 0 0 0 290 188 Z" stroke="#FFFFFF" stroke-width="1" stroke-linejoin="round" transform="translate(0,0)"></path>
+        
+        <path fill="#8df88e" d="M 118.53867204935949 233.90493456484717 A 177.5 177.5 0 0 1 112.5000311723962 188.10519600603016 L 290 188 A 0 0 0 0 0 290 188 Z" stroke="#FFFFFF" stroke-width="1" stroke-linejoin="round" transform="translate(0,0)"></path>
+        
+        <path fill="#57b0e5" d="M 112.50001472638473 187.9276960141879 A 177.5 177.5 0 0 1 118.4843810611311 142.29833197774155 L 290 188 A 0 0 0 0 0 290 188 Z" stroke="#FFFFFF" stroke-width="1" stroke-linejoin="round" transform="translate(0,0)"></path>
+        
+        <path fill="#f8bd3a" d="M 118.53016847933876 142.12683923822073 A 177.5 177.5 0 0 1 136.17486061551372 99.43320885713781 L 290 188 A 0 0 0 0 0 290 188 Z" stroke="#FFFFFF" stroke-width="1" stroke-linejoin="round" transform="translate(0,0)"></path>
+        
+        <path fill="#f248ff" d="M 136.26350430445873 99.27942802678275 A 177.5 177.5 0 0 1 164.36424908779566 62.6129668078611 L 290 188 A 0 0 0 0 0 290 188 Z" stroke="#FFFFFF" stroke-width="1" stroke-linejoin="round" transform="translate(0,0)"></path>
+        
+        <path fill="#4aba14" d="M 164.48969891796014 62.48739377139958 A 177.5 177.5 0 0 1 201.12855782952823 34.3506694887983 L 290 188 A 0 0 0 0 0 290 188 Z" stroke="#FFFFFF" stroke-width="1" stroke-linejoin="round" transform="translate(0,0)"></path>
+        
+        <path fill="#ff4444" d="M 201.28225157014865 34.26187488609858 A 177.5 177.5 0 0 1 243.9585407548412 16.57528173983664 L 290 188 A 0 0 0 0 0 290 188 Z" stroke="#FFFFFF" stroke-width="1" stroke-linejoin="round" transform="translate(0,0)"></path>
+        
+        <path fill="#45b03e" d="M 244.12998846525835 16.529326000617033 A 177.5 177.5 0 0 1 289.7534560609923 10.500171222375144 L 290 188 A 0 0 0 0 0 290 188 Z" stroke="#FFFFFF" stroke-width="1" stroke-linejoin="round" transform="translate(0,0)"></path>
+
+        
+
+        
+
+      
+    
+        <circle id="white-center" cx="290" cy="188" r="103" fill="#fff"  stroke="#00000000" stroke-width="1"/>
+        
+<!-- all slice labels -->
+        <text id="text1" x="296" y="-5" transform="rotate(6 20,40)" >FAMILY</text>
+        <text id="text2" x="311" y="-88" transform="rotate(22 20,40)"  >CHANCE</text>
+        <text id="text3" x="303" y="-181" transform="rotate(39 20,40)"  >PAYDAY</text>
+        <text id="text4" x="279" y="-252" transform="rotate(53 20,40)" >EDUCATION</text>
+        <text id="text5" x="252" y="-311" transform="rotate(66 20,40)" >SHOPPING</text>
+        <text id="text6" x="204" y="-365" transform="rotate(80 20,40)"  >CHANCE</text>
+
+
+        <text id="text7" x="-94" y="499" transform="rotate(-81 20,40)" >MARKET</text>
+        <text id="text8" x="-17" y="518" transform="rotate(-66 20,40)" >CHANCE</text>
+        <text id="text9" x="41" y="517" transform="rotate(-54 20,40)" >FAMILY</text>
+        <text id="text10" x="147" y="487" transform="rotate(-35 20,40)" >CHANCE</text>
+        <text id="text11" x="201" y="449" transform="rotate(-22 20,40)" >PAYDAY</text>
+        <text id="text12" x="262" y="386" transform="rotate(-6 20,40)" >CHANCE</text>
+
+        <text id="text13" x="292" y="319" transform="rotate(8 20,40)" >SHOPPING</text>
+        <text id="text13" x="312" y="245" transform="rotate(22 20,40)" >CHANCE</text>
+        <text id="text16" x="314" y="152" transform="rotate(39 20,40)" >MARKET</text>
+        <text id="text16" x="290" y="82" transform="rotate(53 20,40)" >CHANCE</text>
+        <text id="text17" x="249" y="22" transform="rotate(66 20,40)" >FAMILY</text>
+        <text id="text18" x="189" y="-37" transform="rotate(82 20,40)" >CHANCE</text>
+
+        <text id="text19" x="-104" y="165" transform="rotate(-81 20,40)" >PAYDAY</text>
+        <text id="text20" x="-30" y="183" transform="rotate(-66 20,40)" >EDUCATION</text>
+        <text id="text21" x="46" y="181" transform="rotate(-54 20,40)" >SHOPPING</text>
+        <text id="text22" x="121" y="154" transform="rotate(-38 20,40)" >BIG CHANCE</text>
+        <text id="text23" x="197" y="118" transform="rotate(-24 20,40)" >MARKET</text>
+        <text id="text24" x="246" y="66" transform="rotate(-10 20,40)" >BIG CHANCE</text>
+
+
+
+
+<!-- all the players -->
+
+        <circle class="players" id="player1" style="display:block" title="1" cx="298" cy="36" r="7" fill="red"  stroke="black" stroke-width="1"/>
+        
+        <circle class="players"  id="player2"  style="display:none" title="1" cx="318" cy="38" r="7" fill="yellow"  stroke="black" stroke-width="1"/>
+
+        <circle class="players" style="display:none"  id="player3" title="1" cx="298" cy="52" r="7" fill="blue"  stroke="black" stroke-width="1"/>
+
+        <circle class="players"  id="player4"  style="display:none"  title="1" cx="317" cy="54" r="7" fill="green"  stroke="black" stroke-width="1"/>
+        
+        <circle class="players"  id="player5"  style="display:none"  title="1" cx="299" cy="67" r="7" fill="black"  stroke="black" stroke-width="1"/>
+        
+        <circle class="players"  id="player6"  style="display:none"  title="1" cx="313" cy="70" r="7" fill="white"  stroke="black" stroke-width="1"/>
+
+    </svg>
+
+    <section style="position: relative;">
+        
+        <button id="button-to-delete-article" onclick="hideArticle()">X</button>
+        <!-- Create 72 articles with default display none and set class names -->
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+<article class="hide category-payday">Payday!</article>
+
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+<article class="hide category-family">Family lorem ipsum</article>
+        
+        
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+<article class="hide category-chance-small">Small chance lorem ipsum</article>
+        
+        
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+<article class="hide category-chance-big">Big chance lorem ipsum</article>
+        
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+<article class="hide category-market">Market lorem ipsum</article>
+
+
+<article class="hide category-shopping">Shopping lorem ipsum</article>        
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+<article class="hide category-shopping">Shopping lorem ipsum</article>
+        
+<article class="hide category-education">Education lorem ipsum</article>
+<article class="hide category-education">Education lorem ipsum</article>
+<article class="hide category-education">Education lorem ipsum</article>
+<article class="hide category-education">Education lorem ipsum</article>
+<article class="hide category-education">Education lorem ipsum</article>
+<article class="hide category-education">Education lorem ipsum</article>
+<article class="hide category-education">Education lorem ipsum</article>
+<article class="hide category-education">Education lorem ipsum</article>
+<article class="hide category-education">Education lorem ipsum</article>
+<article class="hide category-education">Education lorem ipsum</article>
+<article class="hide category-education">Education lorem ipsum</article>
+<article class="hide category-education">Education lorem ipsum</article>
+<article class="hide category-education">Education lorem ipsum</article>
+<article class="hide category-education">Education lorem ipsum</article>
+<article class="hide category-education">Education lorem ipsum</article>
+<article class="hide category-education">Education lorem ipsum</article>
+<article class="hide category-education">Education lorem ipsum</article>
+<article class="hide category-education">Education lorem ipsum</article>
+<article class="hide category-education">Education lorem ipsum</article>
+<article class="hide category-education">Education lorem ipsum</article>
+<article class="hide category-education">Education lorem ipsum</article>
+<article class="hide category-education">Education lorem ipsum</article>
+<article class="hide category-education">Education lorem ipsum</article>
+<article class="hide category-education">Education lorem ipsum</article>
+<article class="hide category-education">Education lorem ipsum</article>
+<article class="hide category-education">Education lorem ipsum</article>
+<article class="hide category-education">Education lorem ipsum</article>
+<article class="hide category-education">Education lorem ipsum</article>
+<article class="hide category-education">Education lorem ipsum</article>
+<article class="hide category-education">Education lorem ipsum</article>
+<article class="hide category-education">Education lorem ipsum</article>
+<article class="hide category-education">Education lorem ipsum</article>
+<article class="hide category-education">Education lorem ipsum</article>
+<article class="hide category-education">Education lorem ipsum</article>
+<article class="hide category-education">Education lorem ipsum</article>
+<article class="hide category-education">Education lorem ipsum</article>
+        </section>
+
+    </div>
+
+    
+
+
+<script>
+
+    
+// player_1_coordinates
+var player1_cordinates = [['place 0, ',-10, -10], ['place 1, ',298, 36], ['place 2, ',338, 44], ['place 3, ',374, 62], ['place 4, ',403, 88], ['place 5, ',426, 121], ['place 6, ',438, 157], ['place 7, ',441, 198], ['place 8, ',434, 235], ['place 9, ',415, 273], ['place 10,', 391, 302], ['place 11,', 355, 325], ['place 12,', 322, 335], ['place 13,', 280, 339], ['place 14,', 242, 332], ['place 15,', 205, 313], ['place 16,', 178, 288], ['place 17,', 154, 254], ['place 18,', 142, 218], ['place 19,', 140, 177], ['place 20,', 147, 139], ['place 21,', 165, 104], ['place 22,', 191, 74], ['place 23,', 225, 52], ['place 24,', 262, 40]];
+
+// player_2_coordinates
+var player2_cordinates = [['place 0, ',-10, -10], ['place 1, ',318, 38], ['place 2, ',357, 51], ['place 3, ',389, 72], ['place 4, ',415, 102], ['place 5, ',433, 139], ['place 6, ',441, 179], ['place 7, ',438, 218], ['place 8, ',424, 255], ['place 9, ',404, 287], ['place 10,', 372, 314], ['place 11,', 338, 329], ['place 12,', 298, 338], ['place 13,', 260, 334], ['place 14,', 223, 322], ['place 15,', 192, 302], ['place 16,', 164, 271], ['place 17,', 147, 235], ['place 18,', 140, 197], ['place 19,', 143, 158], ['place 20,', 156, 121], ['place 21,', 178, 88], ['place 22,', 206, 64], ['place 23,', 242, 45], ['place 24,', 280, 37]];
+
+//var player_3_coordinates
+var player3_cordinates = [['place 0, ',-10, -10], ['place 1, ',298, 52], ['place 2, ',334, 59], ['place 3, ',367, 75], ['place 4, ',392, 98], ['place 5, ',411, 127], ['place 6, ',423, 159], ['place 7, ',426, 197], ['place 8, ',420, 231], ['place 9, ',404, 264], ['place 10,', 382, 290], ['place 11,', 348, 310], ['place 12,', 318, 319], ['place 13,', 280, 321], ['place 14,', 249, 317], ['place 15,', 214, 301], ['place 16,', 189, 279], ['place 17,', 167, 248], ['place 18,', 157, 215], ['place 19,', 154, 179], ['place 20,', 162, 145], ['place 21,', 176, 112], ['place 22,', 202, 85], ['place 23,', 229, 66], ['place 24,', 264, 53]];
+
+//var player_4_coordinates
+var player4_cordinates = [['place 0, ',-10, -10], ['place 1, ',317, 54], ['place 2, ',351, 66], ['place 3, ',380, 84], ['place 4, ',403, 112], ['place 5, ',419, 144], ['place 6, ',426, 180], ['place 7, ',424, 214], ['place 8, ',411, 248], ['place 9, ',391, 277], ['place 10,', 364, 302], ['place 11,', 334, 315], ['place 12,', 297, 323], ['place 13,', 263, 321], ['place 14,', 229, 310], ['place 15,', 201, 290], ['place 16,', 177, 263], ['place 17,', 162, 231], ['place 18,', 155, 195], ['place 19,', 158, 161], ['place 20,', 168, 127], ['place 21,', 189, 97], ['place 22,', 215, 75], ['place 23,', 247, 59], ['place 24,', 281, 52]];
+
+//player_5_coordinates
+
+var player5_cordinates = [['place 0, ',-10, -10], ['place 1, ',299, 67], ['place 2, ',329, 74], ['place 3, ',356, 88], ['place 4, ',381, 108], ['place 5, ',398, 136], ['place 6, ',408, 164], ['place 7, ',409, 197], ['place 8, ',406, 226], ['place 9, ',390, 256], ['place 10,', 369, 279], ['place 11,', 342, 294], ['place 12,', 314, 305], ['place 13,', 283, 305], ['place 14,', 253, 303], ['place 15,', 223, 288], ['place 16,', 199, 269], ['place 17,', 182, 241], ['place 18,', 174, 212], ['place 19,', 171, 180], ['place 20,', 176, 148], ['place 21,', 188, 121], ['place 22,', 210, 97], ['place 23,', 237, 79], ['place 24,', 267, 70]];
+
+//player_6_coordinates
+var player6_cordinates = [['place 0, ',-10, -10], ['place 1, ',313, 70], ['place 2, ',344, 80], ['place 3, ',369, 96], ['place 4, ',389, 120], ['place 5, ',404, 148], ['place 6, ',410, 180], ['place 7, ',407, 210], ['place 8, ',397, 240], ['place 9, ',383, 265], ['place 10,', 356, 286], ['place 11,', 330, 301], ['place 12,', 299, 308], ['place 13,', 268, 304], ['place 14,', 237, 296], ['place 15,', 211, 279], ['place 16,', 189, 255], ['place 17,', 177, 228], ['place 18,', 171, 196], ['place 19,', 172, 166], ['place 20,', 183, 134], ['place 21,', 200, 110], ['place 22,', 223, 89], ['place 23,', 251, 74], ['place 24,', 281, 68]]; //end of coordinates
+
+var categories = [ "0","category-family","category-chance-small","category-payday","category-education","category-shopping","category-chance-small","category-market","category-chance-small","category-family","category-chance-small","category-payday","category-chance-small", "category-shopping","category-chance-small","category-market","category-chance-small","category-family","category-chance-small","category-payday","category-education","category-shopping","category-chance-big","category-market","category-chance-big"];
+
+
+
+
+
+
+
+
+var newPlace1;
+var newPlace2;
+var newPlace3;
+var newPlace4;
+var newPlace5;
+var newPlace6;
+var player_1_place_NR  = 1;
+var player_2_place_NR  = 1;
+var player_3_place_NR  = 1;
+
+var player_4_place_NR  = 1;
+var player_5_place_NR  = 1;
+var player_6_place_NR  = 1;
+
+var currentPlayer = 1
+var countPlayers = 2;
+var countPlaces;
+
+var articles;
+var randomIndex;
+var randomArticle;
+
+var h; // for colors
+
+
+const rangeInput = document.getElementById('range-input');
+const buttons = document.querySelectorAll('.player-button');
+const players = document.querySelectorAll('.players');
+
+rangeInput.addEventListener('input', () => {
+ countPlayers  = parseInt(rangeInput.value);
+document.getElementById('form-label').innerHTML = `Number of players: ${rangeInput.value}`;
+
+  for (var i = 0; i < buttons.length; i++) {
+    if (i < countPlayers) {
+      buttons[i].style.display = 'block';
+      players[i].style.display = 'block';
+    } else {
+      buttons[i].style.display = 'none';
+      players[i].style.display = 'none';
+    }
+  }
+
+  
+
+});
+
+function separateDice(){
+  h = Math.ceil(Math.random()*360);
+
+      document.getElementById('separate-dice').style.backgroundColor = `hsla(${h},50%,50%,0.5)`;
+      document.getElementById(`separate-dice`).innerHTML = `Separate dice: `+Math.ceil(Math.random()*6);
+
+
+}
+
+
+
+
+function gamePlay(){
+
+    if(currentPlayer>countPlayers){
+        currentPlayer = 1
+      }
+    switch (currentPlayer) {
+        case 1:
+          player1move();
+          break;
+        case 2:
+            player2move();
+            break;
+        case 3:
+            player3move();
+            break;
+        case 4:
+            player4move();
+            break;
+        case 5:
+            player5move();
+            break;
+        case 6:
+            player6move();
+        
+        
+      }
+
+      currentPlayer++;
+
+      document.getElementById('gameplay-button').style.display = `none`;
+
+
+
+      document.getElementById('cards-info').innerHTML = `::${categories[newPlace1]}:: card index:${randomIndex+1} / ${articles.length}`
+
+
+      
+      
+
+}
+
+
+
+
+  
+
+
+
+
+
+function player1move(){
+
+    var move1 =  Math.ceil(Math.random()*6);
+
+    newPlace1 = player_1_place_NR + move1;
+
+    if (newPlace1 > 24) {
+        newPlace1 = newPlace1 % 24;
+      }
+
+      
+      player_1_place_NR = newPlace1;
+    
+
+findArticleAndShowIt(newPlace1);
+
+document.getElementById('players-info').innerHTML = `Player1, moved to: ${newPlace1}, in category:${categories[newPlace1]}`;
+
+
+
+    document.getElementById('player1').setAttribute("cx", player1_cordinates[player_1_place_NR][1]);
+
+    document.getElementById('player1').setAttribute("cy", player1_cordinates[player_1_place_NR][2]);
+}
+
+function player2move(){
+
+    var move2 =  Math.ceil(Math.random()*6);
+
+    newPlace2 = player_2_place_NR + move2;
+
+    if (newPlace2 > 24) {
+        newPlace2 = newPlace2 % 24;
+      }
+
+      player_2_place_NR = newPlace2;
+      countPlaces = newPlace2;
+
+      findArticleAndShowIt(countPlaces);
+
+
+      document.getElementById('players-info').innerHTML = `Player2, moved to: ${countPlaces}, in category:${categories[countPlaces]}`;
+
+    document.getElementById('player2').setAttribute("cx", player2_cordinates[player_2_place_NR][1]);
+
+    document.getElementById('player2').setAttribute("cy", player2_cordinates[player_2_place_NR][2]);
+}
+
+function player3move(){
+
+    var move3 =  Math.ceil(Math.random()*6);
+
+    newPlace3 = player_3_place_NR + move3;
+
+    if (newPlace3 > 24) {
+        newPlace3 = newPlace3 % 24;
+      }
+
+      player_3_place_NR = newPlace3;
+      countPlaces = newPlace3;
+
+      findArticleAndShowIt(countPlaces);
+
+      document.getElementById('players-info').innerHTML = `Player3, moved to: ${countPlaces}, in category:${categories[countPlaces]}`;
+
+
+    document.getElementById('player3').setAttribute("cx", player3_cordinates[player_3_place_NR][1]);
+
+    document.getElementById('player3').setAttribute("cy", player3_cordinates[player_3_place_NR][2]);
+}
+
+function player4move(){
+
+    var move4 =  Math.ceil(Math.random()*6);
+
+    newPlace4 = player_4_place_NR + move4;
+
+    if (newPlace4 > 24) {
+        newPlace4 = newPlace4 % 24;
+      }
+
+      player_4_place_NR = newPlace4;
+      countPlaces = newPlace4;
+
+      findArticleAndShowIt(countPlaces);
+
+      document.getElementById('players-info').innerHTML = `Player4, moved to: ${countPlaces}, in category:${categories[countPlaces]}`;
+
+    document.getElementById('player4').setAttribute("cx", player4_cordinates[player_4_place_NR][1]);
+
+    document.getElementById('player4').setAttribute("cy", player4_cordinates[player_4_place_NR][2]);
+}
+
+function player5move(){
+
+    var move5 =  Math.ceil(Math.random()*6);
+
+    newPlace5 = player_5_place_NR + move5;
+
+    if (newPlace5 > 24) {
+        newPlace5 = newPlace5 % 24;
+      }
+
+      player_5_place_NR = newPlace5;
+      countPlaces = newPlace5;
+
+      findArticleAndShowIt(countPlaces);
+      document.getElementById('players-info').innerHTML = `Player5, moved to: ${countPlaces}, in category:${categories[countPlaces]}`;
+
+    document.getElementById('player5').setAttribute("cx", player5_cordinates[player_5_place_NR][1]);
+
+    document.getElementById('player5').setAttribute("cy", player5_cordinates[player_5_place_NR][2]);
+}
+
+function player6move(){
+
+    var move6 =  Math.ceil(Math.random()*6);
+
+    newPlace6 = player_6_place_NR + move6;
+
+    if (newPlace6 > 24) {
+        newPlace6 = newPlace6 % 24;
+      }
+
+      player_6_place_NR = newPlace6;
+      countPlaces = newPlace6;
+      findArticleAndShowIt(countPlaces);
+
+
+      document.getElementById('players-info').innerHTML = `Player6, moved to: ${countPlaces}, in category:${categories[countPlaces]}`;
+    document.getElementById('player6').setAttribute("cx", player6_cordinates[player_6_place_NR][1]);
+
+    document.getElementById('player6').setAttribute("cy", player6_cordinates[player_6_place_NR][2]);
+}
+
+
+
+
+
+function findArticleAndShowIt(xxx){
+    // Get all articles with class name 'category-family'
+// Select all articles with a class of "category1"
+articles = document.querySelectorAll(`section .${categories[xxx]}`);
+
+// Choose a random index from the list of articles
+randomIndex = Math.floor(Math.random() * articles.length);
+
+// Get the article element at the random index
+ randomArticle = articles[randomIndex];
+
+// Add the "info-card" class to the random article
+randomArticle.classList.add('info-card');
+randomArticle.classList.remove(`${categories[xxx]}`);
+
+document.getElementById('button-to-delete-article').style.display = `block`;
+
+
+
+  };
+
+  function hideArticle(){
+    // Remove the class name "category-family" from the displayed article
+    document.getElementById('button-to-delete-article').style.display = `none`;
+    document.getElementById('gameplay-button').style.display = `block`;
+
+    
+    articles[randomIndex].classList.remove("info-card");
+    articles[randomIndex].classList.remove(`.${categories[randomIndex]}`);
+}
+</script>
+
+
+</body>
+</html>
